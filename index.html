@@ -342,7 +342,8 @@
   .d-color { color: #4285F4; }
   .l-color { color: #0A66C2; }
   .ga4-color { color: #E37400; }
-  .social-color { color: #9e9c94; }
+  .sc-color { color: #4285F4; }
+  .social-color { color: #E1306C; }
 
   /* Social pending notice */
   .notice {
@@ -401,9 +402,9 @@
   <div class="header">
     <div class="header-top">
       <div>
-        <div class="header-label">Datahub · Paid Media + Analytics + Social</div>
+        <div class="header-label">Datahub · Solo conexiones activas</div>
         <h1>Catálogo de fuentes de data por cliente</h1>
-        <p>¿Tu cliente tiene data en el Datahub? Aquí puedes ver qué fuentes están conectadas para cada cliente. Si no ves una fuente, aún no ha sido exportada.</p>
+        <p>Clientes con al menos una conexión activa en el Datahub. Solo se muestran fuentes con estado <strong>Activo = Sí</strong>. Total: <strong>100 clientes · 167 conexiones</strong>.</p>
       </div>
       <div class="header-stats">
         <div class="stat">
@@ -432,6 +433,8 @@
       <option value="dv360">DV360</option>
       <option value="linkedin_ads">LinkedIn Ads</option>
       <option value="ga4">GA4 Analytics</option>
+      <option value="search_console">Search Console</option>
+      <option value="social_media">Social Media</option>
     </select>
     <span class="filter-count" id="fcount"></span>
   </div>
@@ -492,6 +495,18 @@
               <span class="plat-sub" style="color:var(--text3)">Analytics</span>
             </div>
           </th>
+          <th class="center" style="width:82px">
+            <div class="th-inner center">
+              <span class="plat-name sc-color">Search</span>
+              <span class="plat-sub" style="color:var(--text3)">Console</span>
+            </div>
+          </th>
+          <th class="center" style="width:82px">
+            <div class="th-inner center">
+              <span class="plat-name social-color">Social</span>
+              <span class="plat-sub" style="color:var(--text3)">Media</span>
+            </div>
+          </th>
           <th class="center" style="width:90px" onclick="sort('total_fuentes')">
             <div class="th-inner center">
               <span>Cobertura</span>
@@ -513,82 +528,1309 @@
 
 <script>
 const DATA = [
-{"cliente":"ABS Refigeracion","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Academia Riqueza","vertical":"Educacion","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Activision","vertical":"Gaming","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":1,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"Agencia Publirama","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"AirJofrasi","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Aiwa","vertical":"Tecnologia","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Alqueria","vertical":"Alimentos y despensas","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":4},
-{"cliente":"Asesores y Contadores","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Autorent","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Banco GyT","vertical":"Banca y finanzas","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":3},
-{"cliente":"Bellavista","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Betcris","vertical":"Entretenimiento","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Birdie Golf Studios","vertical":"Retail","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"CMF","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"CMI","vertical":"Alimentos y despensas","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":1,"linkedin_ads":0,"ga4":0,"total_fuentes":4},
-{"cliente":"Campero","vertical":"Alimentos y despensas","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":1,"linkedin_ads":0,"ga4":1,"total_fuentes":5},
-{"cliente":"Canoas Beach","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"Casa Reposo","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Casa de Materiales","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"Catsesa","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Centro Medico Nana","vertical":"Salud y bienestar","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Cochez","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":4},
-{"cliente":"Colegio Han Al Internacional","vertical":"Educacion","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Compartamos Banco","vertical":"Banca y finanzas","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"Consultorio Psicologico","vertical":"Salud y bienestar","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Control GPS","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"DHL","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":1,"linkedin_ads":1,"ga4":1,"total_fuentes":6},
-{"cliente":"Dentalia","vertical":"Salud y bienestar","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Digital Studio","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"ESI School of Management","vertical":"Educacion","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"EVO","vertical":"Banca y finanzas","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"Ecodax","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Edenred","vertical":"Tecnologia","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":2},
-{"cliente":"Factureya","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Friso","vertical":"Salud y bienestar","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":1,"linkedin_ads":0,"ga4":1,"total_fuentes":5},
-{"cliente":"GUATEMALACOM","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"General de Seguros","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Gentera","vertical":"Retail","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Gerencia y Sistema","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Green View","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Grupo Arve","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":3},
-{"cliente":"Grupo Julio","vertical":"Belleza","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":4},
-{"cliente":"Grupo Pisa","vertical":"Salud y bienestar","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":1,"linkedin_ads":0,"ga4":1,"total_fuentes":4},
-{"cliente":"Grupo Valor","vertical":"Real Estate","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"Grupotec","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"HHI","vertical":"Salud y bienestar","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":1,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"Hablemos de Negocios","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Impilo","vertical":"Salud y bienestar","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"International School Panama","vertical":"Educacion","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":3},
-{"cliente":"JH Contratista","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"JLR","vertical":"Automovil","google_ads":1,"meta_ads":0,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"Jamar","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"John Wilson","vertical":"Salud y bienestar","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Lancasco","vertical":"Salud y bienestar","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Land Rover","vertical":"Automovil","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Libre","vertical":"Retail","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"MZK","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Mediam-Techwest","vertical":"Entretenimiento","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Metroview","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"Mi Compa","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"Mi Wawita","vertical":"Automovil","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"New Balance","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":1,"linkedin_ads":0,"ga4":1,"total_fuentes":5},
-{"cliente":"Nike","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"Novey","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":4},
-{"cliente":"Outsourcing EI","vertical":"Banca y finanzas","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"P&G","vertical":"Salud y bienestar","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Plaza del Este","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"Pollo Granjero","vertical":"Alimentos y despensas","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":3},
-{"cliente":"Prestige","vertical":"Automovil","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":3},
-{"cliente":"Revlon","vertical":"Belleza","google_ads":0,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
-{"cliente":"SafeOwner","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Universidad Wiener","vertical":"Educacion","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
-{"cliente":"Vitalisimo","vertical":"Alimentos y despensas","google_ads":0,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2}
+  {
+    "cliente": "ABS Refigeracion",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Academia Riqueza",
+    "vertical": "Educacion",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Activision",
+    "vertical": "Gaming",
+    "google_ads": 0,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 1,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "Agencia Publirama",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "AirJofrasi",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Aiwa",
+    "vertical": "Tecnologia",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Alqueria",
+    "vertical": "Alimentos y despensas",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 1,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 1,
+    "search_console": 1,
+    "social_media": 1,
+    "total_fuentes": 6
+  },
+  {
+    "cliente": "Asesores y Contadores",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Autorent",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Banco GyT",
+    "vertical": "Banca y finanzas",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 1,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 3
+  },
+  {
+    "cliente": "Bellavista",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Betcris",
+    "vertical": "Entretenimiento",
+    "google_ads": 0,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 1,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "Birdie Golf Studios",
+    "vertical": "Retail",
+    "google_ads": 0,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "CMF",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "CMI",
+    "vertical": "Alimentos y despensas",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 1,
+    "dv360": 1,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 4
+  },
+  {
+    "cliente": "Campero",
+    "vertical": "Alimentos y despensas",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 1,
+    "dv360": 1,
+    "linkedin_ads": 0,
+    "ga4": 1,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 5
+  },
+  {
+    "cliente": "Canoas Beach",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "Casa Reposo",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Casa de Materiales",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "Catsesa",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Centro Medico Ñaña",
+    "vertical": "Salud y bienestar",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Cochez",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 1,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 1,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 4
+  },
+  {
+    "cliente": "Colegio Han Al Internacional",
+    "vertical": "Educacion",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Compartamos Banco",
+    "vertical": "Banca y finanzas",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "Consultorio Psicologico",
+    "vertical": "Salud y bienestar",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Control GPS",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "DHL",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 1,
+    "dv360": 1,
+    "linkedin_ads": 1,
+    "ga4": 1,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 6
+  },
+  {
+    "cliente": "Dentalia",
+    "vertical": "Salud y bienestar",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Digital Studio",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "ESI School of Management",
+    "vertical": "Educacion",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "EVO",
+    "vertical": "Banca y finanzas",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "Ecodax",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Edenred",
+    "vertical": "Tecnologia",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 1,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "Factureya",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Friso",
+    "vertical": "Salud y bienestar",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 1,
+    "dv360": 1,
+    "linkedin_ads": 0,
+    "ga4": 1,
+    "search_console": 0,
+    "social_media": 1,
+    "total_fuentes": 6
+  },
+  {
+    "cliente": "GUATEMALACOM",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "General de Seguros",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Gentera",
+    "vertical": "Retail",
+    "google_ads": 0,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Gerencia y Sistema",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Green View",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Grupo Arve",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 1,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 3
+  },
+  {
+    "cliente": "Grupo Julio",
+    "vertical": "Belleza",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 1,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 1,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 4
+  },
+  {
+    "cliente": "Grupo Pisa",
+    "vertical": "Salud y bienestar",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 1,
+    "linkedin_ads": 0,
+    "ga4": 1,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 4
+  },
+  {
+    "cliente": "Grupo Valor",
+    "vertical": "Real Estate",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "Grupotec",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "HHI",
+    "vertical": "Salud y bienestar",
+    "google_ads": 0,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 1,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "Hablemos de Negocios",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Impilo",
+    "vertical": "Salud y bienestar",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "International School Panama",
+    "vertical": "Educacion",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 1,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 3
+  },
+  {
+    "cliente": "JH Contratista",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "JLR",
+    "vertical": "Automovil",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 1,
+    "dv360": 0,
+    "linkedin_ads": 1,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 3
+  },
+  {
+    "cliente": "Jamar",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "John Wilson",
+    "vertical": "Salud y bienestar",
+    "google_ads": 0,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Lancasco",
+    "vertical": "Salud y bienestar",
+    "google_ads": 0,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Land Rover",
+    "vertical": "Automovil",
+    "google_ads": 0,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Libre",
+    "vertical": "Retail",
+    "google_ads": 0,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "MZK",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Mediam",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Mer Logistica",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Metroview",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "Mi Compa",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "Mi Wawita",
+    "vertical": "Automovil",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Monitor Company",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Motored",
+    "vertical": "Automovil",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "NEX",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "NMinera",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "New Balance",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 1,
+    "dv360": 1,
+    "linkedin_ads": 0,
+    "ga4": 1,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 5
+  },
+  {
+    "cliente": "Nike",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "Noujau",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Novey",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 1,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 1,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 4
+  },
+  {
+    "cliente": "OV Londres",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "One Solution",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Outsourcing EI",
+    "vertical": "Banca y finanzas",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Pampers",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Plaza del Este",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "Pollo Granjero",
+    "vertical": "Alimentos y despensas",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 1,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 3
+  },
+  {
+    "cliente": "Portones Favil",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Prestige",
+    "vertical": "Automovil",
+    "google_ads": 1,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 1,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 3
+  },
+  {
+    "cliente": "Proydea",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Puerta Levadizas",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Puertas Favil",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Punto Pago",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Regency",
+    "vertical": "Real Estate",
+    "google_ads": 0,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Revlon",
+    "vertical": "Belleza",
+    "google_ads": 0,
+    "meta_ads": 1,
+    "tiktok_ads": 1,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  },
+  {
+    "cliente": "SMV",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "SafeOwner",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Servitec JJ",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Solgas",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Super24 Guatemala",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Tecniservicios",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Terapia Capacitacion",
+    "vertical": "Salud y bienestar",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Terapia Jovenes",
+    "vertical": "Salud y bienestar",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Terapia Lenguaje",
+    "vertical": "Salud y bienestar",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Terapia Parejas",
+    "vertical": "Salud y bienestar",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Traducciones Gervasoni",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Traducciones Low Cost",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Universidad Wiener",
+    "vertical": "Educacion",
+    "google_ads": 0,
+    "meta_ads": 1,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Vana",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Vista Drone",
+    "vertical": "Retail",
+    "google_ads": 1,
+    "meta_ads": 0,
+    "tiktok_ads": 0,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 1
+  },
+  {
+    "cliente": "Vitalisimo",
+    "vertical": "Alimentos y despensas",
+    "google_ads": 0,
+    "meta_ads": 1,
+    "tiktok_ads": 1,
+    "dv360": 0,
+    "linkedin_ads": 0,
+    "ga4": 0,
+    "search_console": 0,
+    "social_media": 0,
+    "total_fuentes": 2
+  }
 ];
 
-const PLATS = ['google_ads','meta_ads','tiktok_ads','dv360','linkedin_ads','ga4'];
+const PLATS = ['google_ads','meta_ads','tiktok_ads','dv360','linkedin_ads','ga4','search_console','social_media'];
 let sortCol = 'cliente', sortDir = 1;
 
 function ck(v, pending) {
@@ -599,12 +1841,12 @@ function ck(v, pending) {
 }
 
 function scoreDots(n) {
-  const dots = Array.from({length:6}, (_,i) =>
+  const dots = Array.from({length:8}, (_,i) =>
     `<div class="sdot${i<n?'':' empty'}"></div>`
   ).join('');
   return `<div class="score-wrap">
     <div class="score-dots">${dots}</div>
-    <span class="score-label${n===6?' full':''}">${n}/6</span>
+    <span class="score-label${n===8?' full':''}">${n}/8</span>
   </div>`;
 }
 
@@ -638,13 +1880,15 @@ function render() {
   const tbody = document.getElementById('tbody');
 
   if (!rows.length) {
-    tbody.innerHTML = `<tr class="empty-row"><td colspan="9">Sin resultados para los filtros aplicados.</td></tr>`;
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="11">Sin resultados para los filtros aplicados.</td></tr>`;
   } else {
     tbody.innerHTML = rows.map(r => `<tr>
       <td class="client-name">${r.cliente}</td>
       <td><span class="v-pill">${r.vertical}</span></td>
       ${['google_ads','meta_ads','tiktok_ads','dv360','linkedin_ads'].map(p => `<td class="center">${ck(r[p], false)}</td>`).join('')}
       <td class="center">${ck(r.ga4, false)}</td>
+      <td class="center">${ck(r.search_console, false)}</td>
+      <td class="center">${ck(r.social_media, false)}</td>
       <td>${scoreDots(r.total_fuentes)}</td>
     </tr>`).join('');
   }
