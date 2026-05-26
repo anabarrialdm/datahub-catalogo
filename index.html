@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo Datahub — Fuentes de Data por Cliente</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f6f3;
+    --surface: #ffffff;
+    --surface2: #f0efe9;
+    --border: #e2e0d8;
+    --border2: #cccab8;
+    --text: #1a1916;
+    --text2: #6b6960;
+    --text3: #9e9c94;
+    --green: #1a7a4a;
+    --green-bg: #eaf5ef;
+    --green-dot: #2ea86b;
+    --accent: #e8521a;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 32px 64px;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 28px;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .header p {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+    max-width: 520px;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 24px;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .stat {
+    text-align: right;
+  }
+
+  .stat-num {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  /* Toolbar */
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text3);
+    font-size: 14px;
+    pointer-events: none;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 8px 12px 8px 34px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    transition: border-color .15s;
+  }
+
+  input[type="text"]:focus {
+    border-color: var(--border2);
+    box-shadow: 0 0 0 3px rgba(26,122,74,.08);
+  }
+
+  select {
+    padding: 8px 28px 8px 12px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%239e9c94' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+
+  select:focus { border-color: var(--border2); outline: none; }
+
+  .filter-count {
+    font-size: 12px;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+    margin-left: auto;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--text2);
+  }
+
+  /* Table */
+  .tbl-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  thead th {
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    border-right: 1px solid var(--border);
+    transition: color .12s;
+  }
+
+  thead th:last-child { border-right: none; }
+  thead th:hover { color: var(--text); }
+  thead th.center { text-align: center; }
+
+  .th-inner {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .th-inner.center {
+    justify-content: center;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .plat-name { font-size: 11px; }
+  .plat-sub { font-size: 9px; letter-spacing: .04em; }
+
+  .sort-arrow { opacity: .35; font-size: 9px; }
+  .sort-arrow.active { opacity: 1; color: var(--accent); }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background .1s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #faf9f6; }
+
+  td {
+    padding: 10px 14px;
+    vertical-align: middle;
+    border-right: 1px solid var(--border);
+  }
+
+  td:last-child { border-right: none; }
+  td.center { text-align: center; }
+
+  .client-name {
+    font-weight: 500;
+    color: var(--text);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .v-pill {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: var(--surface2);
+    color: var(--text2);
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .check-yes {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: var(--green-bg);
+    border-radius: 50%;
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .check-no {
+    display: inline-block;
+    width: 16px;
+    height: 1px;
+    background: var(--border2);
+    vertical-align: middle;
+  }
+
+  /* Score bar */
+  .score-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .score-dots {
+    display: flex;
+    gap: 3px;
+  }
+
+  .sdot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green-dot);
+  }
+
+  .sdot.empty {
+    background: var(--border);
+  }
+
+  .score-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    font-weight: 500;
+  }
+
+  .score-label.full { color: var(--green); }
+
+  /* Platform colors in header */
+  .g-color { color: #188038; }
+  .m-color { color: #0866FF; }
+  .t-color { color: #fe2c55; }
+  .d-color { color: #4285F4; }
+  .l-color { color: #0A66C2; }
+  .ga4-color { color: #E37400; }
+  .social-color { color: #9e9c94; }
+
+  /* Social pending notice */
+  .notice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fffbeb;
+    border: 1px solid #f5c842;
+    border-radius: var(--radius);
+    padding: 8px 14px;
+    font-size: 12px;
+    color: #7a5200;
+    margin-bottom: 16px;
+  }
+
+  /* Empty */
+  .empty-row td {
+    text-align: center;
+    padding: 40px;
+    color: var(--text3);
+    font-size: 14px;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .footer-left {
+    font-size: 12px;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .footer-right {
+    font-size: 11px;
+    color: var(--text3);
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .page { padding: 24px 16px 40px; }
+    .header h1 { font-size: 22px; }
+    .header-stats { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <div class="header-label">Datahub · Paid Media + Analytics + Social</div>
+        <h1>Catálogo de fuentes de data por cliente</h1>
+        <p>¿Tu cliente tiene data en el Datahub? Aquí puedes ver qué fuentes están conectadas para cada cliente. Si no ves una fuente, aún no ha sido exportada.</p>
+      </div>
+      <div class="header-stats">
+        <div class="stat">
+          <div class="stat-num" id="stat-clients">—</div>
+          <div class="stat-label">Clientes</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="stat-connections">—</div>
+          <div class="stat-label">Fuentes activas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="q" placeholder="Buscar cliente o vertical..." />
+    </div>
+    <select id="fv"><option value="">Todas las verticales</option></select>
+    <select id="ff">
+      <option value="">Cualquier fuente</option>
+      <option value="google_ads">Google Ads</option>
+      <option value="meta_ads">Meta Ads</option>
+      <option value="tiktok_ads">TikTok Ads</option>
+      <option value="dv360">DV360</option>
+      <option value="linkedin_ads">LinkedIn Ads</option>
+      <option value="ga4">GA4 Analytics</option>
+    </select>
+    <span class="filter-count" id="fcount"></span>
+  </div>
+
+  <div class="legend">
+    <span class="leg-item">
+      <span class="check-yes">✓</span> Fuente conectada
+    </span>
+    <span class="leg-item">
+      <span style="display:inline-block;width:16px;height:1.5px;background:var(--border2);vertical-align:middle;border-radius:2px;"></span>
+      Sin datos aún
+    </span>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:180px" onclick="sort('cliente')">
+            <div class="th-inner">Cliente <span class="sort-arrow" id="sa-cliente">↕</span></div>
+          </th>
+          <th style="width:150px" onclick="sort('vertical')">
+            <div class="th-inner">Vertical <span class="sort-arrow" id="sa-vertical">↕</span></div>
+          </th>
+          <th class="center" style="width:82px">
+            <div class="th-inner center">
+              <span class="plat-name g-color">Google</span>
+              <span class="plat-sub" style="color:var(--text3)">Ads</span>
+            </div>
+          </th>
+          <th class="center" style="width:82px">
+            <div class="th-inner center">
+              <span class="plat-name m-color">Meta</span>
+              <span class="plat-sub" style="color:var(--text3)">Ads</span>
+            </div>
+          </th>
+          <th class="center" style="width:82px">
+            <div class="th-inner center">
+              <span class="plat-name t-color">TikTok</span>
+              <span class="plat-sub" style="color:var(--text3)">Ads</span>
+            </div>
+          </th>
+          <th class="center" style="width:82px">
+            <div class="th-inner center">
+              <span class="plat-name d-color">DV360</span>
+              <span class="plat-sub" style="color:var(--text3)">Display</span>
+            </div>
+          </th>
+          <th class="center" style="width:82px">
+            <div class="th-inner center">
+              <span class="plat-name l-color">LinkedIn</span>
+              <span class="plat-sub" style="color:var(--text3)">Ads</span>
+            </div>
+          </th>
+          <th class="center" style="width:82px">
+            <div class="th-inner center">
+              <span class="plat-name ga4-color">GA4</span>
+              <span class="plat-sub" style="color:var(--text3)">Analytics</span>
+            </div>
+          </th>
+          <th class="center" style="width:90px" onclick="sort('total_fuentes')">
+            <div class="th-inner center">
+              <span>Cobertura</span>
+              <span class="sort-arrow" id="sa-total_fuentes">↕</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <span class="footer-left" id="footer-left"></span>
+    <span class="footer-right">Fuente: datahub_prod · Actualizado automáticamente</span>
+  </div>
+
+</div>
+
+<script>
+const DATA = [
+{"cliente":"ABS Refigeracion","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Academia Riqueza","vertical":"Educacion","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Activision","vertical":"Gaming","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":1,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"Agencia Publirama","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"AirJofrasi","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Aiwa","vertical":"Tecnologia","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Alqueria","vertical":"Alimentos y despensas","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":4},
+{"cliente":"Asesores y Contadores","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Autorent","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Banco GyT","vertical":"Banca y finanzas","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":3},
+{"cliente":"Bellavista","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Betcris","vertical":"Entretenimiento","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Birdie Golf Studios","vertical":"Retail","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"CMF","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"CMI","vertical":"Alimentos y despensas","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":1,"linkedin_ads":0,"ga4":0,"total_fuentes":4},
+{"cliente":"Campero","vertical":"Alimentos y despensas","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":1,"linkedin_ads":0,"ga4":1,"total_fuentes":5},
+{"cliente":"Canoas Beach","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"Casa Reposo","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Casa de Materiales","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"Catsesa","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Centro Medico Nana","vertical":"Salud y bienestar","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Cochez","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":4},
+{"cliente":"Colegio Han Al Internacional","vertical":"Educacion","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Compartamos Banco","vertical":"Banca y finanzas","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"Consultorio Psicologico","vertical":"Salud y bienestar","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Control GPS","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"DHL","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":1,"linkedin_ads":1,"ga4":1,"total_fuentes":6},
+{"cliente":"Dentalia","vertical":"Salud y bienestar","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Digital Studio","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"ESI School of Management","vertical":"Educacion","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"EVO","vertical":"Banca y finanzas","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"Ecodax","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Edenred","vertical":"Tecnologia","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":2},
+{"cliente":"Factureya","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Friso","vertical":"Salud y bienestar","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":1,"linkedin_ads":0,"ga4":1,"total_fuentes":5},
+{"cliente":"GUATEMALACOM","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"General de Seguros","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Gentera","vertical":"Retail","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Gerencia y Sistema","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Green View","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Grupo Arve","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":3},
+{"cliente":"Grupo Julio","vertical":"Belleza","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":4},
+{"cliente":"Grupo Pisa","vertical":"Salud y bienestar","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":1,"linkedin_ads":0,"ga4":1,"total_fuentes":4},
+{"cliente":"Grupo Valor","vertical":"Real Estate","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"Grupotec","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"HHI","vertical":"Salud y bienestar","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":1,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"Hablemos de Negocios","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Impilo","vertical":"Salud y bienestar","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"International School Panama","vertical":"Educacion","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":3},
+{"cliente":"JH Contratista","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"JLR","vertical":"Automovil","google_ads":1,"meta_ads":0,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"Jamar","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"John Wilson","vertical":"Salud y bienestar","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Lancasco","vertical":"Salud y bienestar","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Land Rover","vertical":"Automovil","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Libre","vertical":"Retail","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"MZK","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Mediam-Techwest","vertical":"Entretenimiento","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Metroview","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"Mi Compa","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"Mi Wawita","vertical":"Automovil","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"New Balance","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":1,"linkedin_ads":0,"ga4":1,"total_fuentes":5},
+{"cliente":"Nike","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"Novey","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":4},
+{"cliente":"Outsourcing EI","vertical":"Banca y finanzas","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"P&G","vertical":"Salud y bienestar","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Plaza del Este","vertical":"Retail","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"Pollo Granjero","vertical":"Alimentos y despensas","google_ads":1,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":3},
+{"cliente":"Prestige","vertical":"Automovil","google_ads":1,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":1,"total_fuentes":3},
+{"cliente":"Revlon","vertical":"Belleza","google_ads":0,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2},
+{"cliente":"SafeOwner","vertical":"Retail","google_ads":1,"meta_ads":0,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Universidad Wiener","vertical":"Educacion","google_ads":0,"meta_ads":1,"tiktok_ads":0,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":1},
+{"cliente":"Vitalisimo","vertical":"Alimentos y despensas","google_ads":0,"meta_ads":1,"tiktok_ads":1,"dv360":0,"linkedin_ads":0,"ga4":0,"total_fuentes":2}
+];
+
+const PLATS = ['google_ads','meta_ads','tiktok_ads','dv360','linkedin_ads','ga4'];
+let sortCol = 'cliente', sortDir = 1;
+
+function ck(v, pending) {
+  if (pending) return `<span style="font-size:11px;color:var(--text3)">⏳</span>`;
+  return v
+    ? `<span class="check-yes">✓</span>`
+    : `<span class="check-no"></span>`;
+}
+
+function scoreDots(n) {
+  const dots = Array.from({length:6}, (_,i) =>
+    `<div class="sdot${i<n?'':' empty'}"></div>`
+  ).join('');
+  return `<div class="score-wrap">
+    <div class="score-dots">${dots}</div>
+    <span class="score-label${n===6?' full':''}">${n}/6</span>
+  </div>`;
+}
+
+function sort(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+  document.querySelectorAll('.sort-arrow').forEach(e => { e.classList.remove('active'); e.textContent = '↕'; });
+  const el = document.getElementById('sa-' + col);
+  if (el) { el.classList.add('active'); el.textContent = sortDir === 1 ? '↑' : '↓'; }
+  render();
+}
+
+function filtered() {
+  const q = (document.getElementById('q').value || '').toLowerCase();
+  const fv = document.getElementById('fv').value;
+  const ff = document.getElementById('ff').value;
+  return DATA.filter(r => {
+    if (q && !(r.cliente.toLowerCase().includes(q) || r.vertical.toLowerCase().includes(q))) return false;
+    if (fv && r.vertical !== fv) return false;
+    if (ff && !r[ff]) return false;
+    return true;
+  }).sort((a, b) => {
+    const av = a[sortCol], bv = b[sortCol];
+    if (typeof av === 'number') return sortDir * (av - bv);
+    return sortDir * String(av).localeCompare(String(bv));
+  });
+}
+
+function render() {
+  const rows = filtered();
+  const tbody = document.getElementById('tbody');
+
+  if (!rows.length) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="9">Sin resultados para los filtros aplicados.</td></tr>`;
+  } else {
+    tbody.innerHTML = rows.map(r => `<tr>
+      <td class="client-name">${r.cliente}</td>
+      <td><span class="v-pill">${r.vertical}</span></td>
+      ${['google_ads','meta_ads','tiktok_ads','dv360','linkedin_ads'].map(p => `<td class="center">${ck(r[p], false)}</td>`).join('')}
+      <td class="center">${ck(r.ga4, false)}</td>
+      <td>${scoreDots(r.total_fuentes)}</td>
+    </tr>`).join('');
+  }
+
+  const totalConns = DATA.reduce((s, r) => s + r.total_fuentes, 0);
+  document.getElementById('stat-clients').textContent = DATA.length;
+  document.getElementById('stat-connections').textContent = totalConns;
+  document.getElementById('fcount').textContent = `${rows.length} de ${DATA.length} clientes`;
+  document.getElementById('footer-left').textContent =
+    `${rows.length} cliente${rows.length !== 1 ? 's' : ''} · ${rows.reduce((s,r) => s + r.total_fuentes, 0)} conexiones visibles`;
+}
+
+function populateVerticals() {
+  const vs = [...new Set(DATA.map(r => r.vertical))].sort();
+  document.getElementById('fv').innerHTML =
+    '<option value="">Todas las verticales</option>' +
+    vs.map(v => `<option value="${v}">${v}</option>`).join('');
+}
+
+['q','fv','ff'].forEach(id => document.getElementById(id).addEventListener('input', render));
+populateVerticals();
+render();
+</script>
+</body>
+</html>
